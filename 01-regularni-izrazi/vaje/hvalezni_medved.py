@@ -25,6 +25,7 @@ medved. Zvrhano zibelko sladkih hrušk mi je prinesel za en sam izdrt trn"."""
 # >>> find_words(test_text, 'de')
 # {'izdere', 'debel', 'oddide', 'začudeno'}
 ###############################################################################
+
 import re
 
 def find_words(besedilo, niz):
@@ -38,6 +39,7 @@ def find_words(besedilo, niz):
 # >>> find_prefix(test_text, 'zi')
 # {'zibala', 'zibel', 'zibelko'}
 ###############################################################################
+
 def find_prefix(besedilo, niz):
     vzorec = fr'\b{niz}\w*\b'
     return set(re.findall(vzorec, besedilo))
@@ -49,6 +51,7 @@ def find_prefix(besedilo, niz):
 # >>> find_suffix(test_text, 'la')
 # {'zibala', 'razveselila', 'prestrašila', 'šivala', 'opazila', 'tla'}
 ###############################################################################
+
 def find_suffix(besedilo, niz):
     vzorec = fr'\b\w*{niz}\b'
     return set(re.findall(vzorec, besedilo))
@@ -60,6 +63,7 @@ def find_suffix(besedilo, niz):
 # >>> double_letters('A volunteer is worth twenty pressed men.')
 # {'volunteer', 'pressed'}
 ###############################################################################
+
 def double_letters(besedilo):
     vzorec = r'(\b\w*(\w)\2\w*\b)'
     return set([j[0] for j in re.findall(vzorec, besedilo)])
