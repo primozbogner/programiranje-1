@@ -199,17 +199,17 @@ let pred = function
 
 let rec delete x = function
   | Prazno -> Prazno
-  | Vozlisce(l, y, d) ->
+  | Vozlisce(l, y, d) as bst ->
     if (x < y) then
       Vozlisce(delete x l, y, d)
     else if (x > y) then
       Vozlisce(l, x, delete x d)
     else (
-      let nas = succ Vozlisce(l, x, d) in
+      let nas = succ bst in
       match nas with
         | None -> l
         | Some nas -> Vozlisce(l, nas, delete nas d)
-    )
+      )
 
 (*-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=*]
  SLOVARJI
@@ -247,7 +247,14 @@ let test_dict =
 [*----------------------------------------------------------------------------*)
 
 let rec dict_get k = function
-  | Prazno -> ()
+  | Prazno -> None
+  | Vozlisce (l, (k', v), d) ->
+    if k = k' then
+      Some v
+    else if k < k' then
+      dict_get k l
+    else
+      dict_get k d
       
 (*----------------------------------------------------------------------------*]
  Funkcija [print_dict] sprejme slovar s ključi tipa [string] in vrednostmi tipa
