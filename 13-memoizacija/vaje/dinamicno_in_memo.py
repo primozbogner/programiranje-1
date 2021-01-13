@@ -11,6 +11,26 @@ from functools import lru_cache
 # podzaporedje `[2, 3, 4, 4, 6, 7, 8, 9]`.
 # -----------------------------------------------------------------------------
 
+def najdaljse_narascajoce_podzaporedje(l):
+    # rabimo dve stvari: zadnji ćlen v podzaporedju do sedaj in ?
+    # memoiziramo to funkcijo
+
+    @lru_cache(maxsize=None)
+    def podzaporedje(i, zadnji):
+        if i >= len(l):
+            return []
+        if l[i] >= zadnji:
+            vzamemo =[l[i] + podzaporedje(i+1, l[i])]
+            ne_vzamemo = podzaporedje(i+1, zadnji)
+            if len(vzamemo) >= len(ne_vzamemo):
+                return vzamemo
+            return ne_vzamemo
+        else: # sez[i] < zadnji
+            # gremo naprej ali začnemo novo zaporedje l[i] -> [l[i], ] -> to se ne splača
+            return podzaporedje(i+1, zadnji)
+
+    return podzaporedje(0, float("-inf"))
+
 # -----------------------------------------------------------------------------
 # Rešitev sedaj popravite tako, da funkcija `vsa_najdaljsa` vrne seznam vseh
 # najdaljših naraščajočih podzaporedij.
@@ -43,7 +63,14 @@ from functools import lru_cache
 # dva.
 # =============================================================================
 
-
+def zabica(mocvara):
+    def zabica_notranja(i, e_ostanek):
+        if i >= len(mocvara):
+            return 0
+        energija = e_ostanek + mocvara[i]
+        navzdol = [zabica_notranja(i + dolzina_skoka, energija - dolzina_skoka) for dolzina_skoka in range(1, energija + 1)]
+        return 1 + min(navzdol)
+    return zabica_notranja(0, 0)
 
 # =============================================================================
 # Nageljni

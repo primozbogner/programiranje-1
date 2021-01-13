@@ -73,7 +73,7 @@ let je_sod = map (fun x -> x mod 2 = 0)
 let map_tlrec f sez = 
   let rec map_aux acc s = function
     | [] -> reverse_bolje acc
-    | x::xs -> map_pomozna (f x :: acc) xs
+    | x::xs -> map_aux (f x :: acc) xs
   in
   map_aux [] sez
 
@@ -98,7 +98,7 @@ let rec mapi f sez =
     | [] -> []
     | x::xs -> f i x :: mapi_aux (i+1) xs
   in
-  mapi_pom 0 sez
+  mapi_aux 0 sez
 
 (*----------------------------------------------------------------------------*]
  Funkcija [zip] sprejme dva seznama in vrne seznam parov istoležnih
